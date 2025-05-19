@@ -4,11 +4,41 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 
 import { useNavigation } from '@react-navigation/native';
 
+import { useState } from 'react';
+
+import { storeUser } from '@/localstorage';
+
 function SignUp() {
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const navigation = useNavigation();
 
     const handleSignUp = () => {
-        console.log('Sign Up button pressed');
+        
+
+        if (email && name && password && confirmPassword) {
+            if (password === confirmPassword && password.length >= 4) {
+                if (storeUser({
+                    email: email,
+                    name: name,
+                    password: password
+                })) {
+                    navigation.navigate('index');
+                }
+                return;
+            } else {
+                if (password.length < 4) {
+                    alert("Password must be at least 6 characters long");
+                }
+                else {
+                    alert("Passwords do not match");
+                }
+            }
+        } else {
+            alert("Please fill in all fields");
+        }
     }
     const navigateToSignIn = () => {
         navigation.navigate('index');
@@ -25,6 +55,9 @@ function SignUp() {
 
                     <View style={styles.textInputContainer}>
                         <TextInput
+                            onChange={(e) => setEmail(e.nativeEvent.text)}
+                            value={email}
+                            autoCapitalize="none"
                             style={{
                                 height: 50,
                                 borderColor: '#ccc',
@@ -37,6 +70,8 @@ function SignUp() {
                             keyboardType="email-address"
                         />
                         <TextInput
+                            onChange={(e) => setName(e.nativeEvent.text)}
+                            value={name}
                             style={{
                                 height: 50,
                                 borderColor: '#ccc',
@@ -48,6 +83,9 @@ function SignUp() {
                             placeholder="Name"
                         />
                         <TextInput
+                            onChange={(e) => setPassword(e.nativeEvent.text)}
+                            value={password}
+                            autoCapitalize="none"
                             style={{
                                 height: 50,
                                 borderColor: '#ccc',
@@ -60,6 +98,9 @@ function SignUp() {
                             secureTextEntry={true}
                         />
                         <TextInput
+                            onChange={(e) => setConfirmPassword(e.nativeEvent.text)}
+                            value={confirmPassword}
+                            autoCapitalize="none"
                             style={{
                                 height: 50,
                                 borderColor: '#ccc',

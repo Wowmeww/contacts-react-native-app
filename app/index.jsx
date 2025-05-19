@@ -1,14 +1,54 @@
 import phoneIcon from '@/assets/images/mine/phoneIcon.png';
 import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-
+import Loading from '@/components/myComponents/loader';
+import { getLoggedInUser, getUsers, setLoggedInUser } from '@/localstorage';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 
 function Index() {
+    let loading = false;
     const navigation = useNavigation();
+    const [users, setUsers] = useState(getUsers());
+    const [signed, setSigned] = useState(getLoggedInUser());
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+    getLoggedInUser().then((user) => {
+        if(user) {
+            navigation.navigate('(tabs)');
+        }
+    });
+
+    useEffect(() => {
+        // clearUsers();
+        setSigned(getLoggedInUser());
+        setUsers(getUsers());
+        if (signed) {
+            navigation.navigate('(tabs)');
+        }
+    }, [])
+    getUsers().then(users => setUsers(users));
+    getLoggedInUser().then(user => setSigned(user));
     const handleSigIn = () => {
-        console.log('Sign Up button pressed');
+        loading = true;
+
+        if (email && password) {
+            loading = true;
+            const user = users.find((user) => user.email === email && user.password === password);
+            if (user) {
+                setLoggedInUser(user);
+
+                console.log(signed);
+                loading = false;
+                navigation.navigate('(tabs)');
+            } else {
+                alert("Invalid email or password");
+            }
+            loading = false;
+        } else {
+            alert("Please fill in all fields");
+        }
     }
     const navigateToSignUp = () => {
         navigation.navigate('signup');
@@ -16,6 +56,7 @@ function Index() {
 
     return (
         <SafeAreaView style={styles.screen}>
+            {loading && <Loading />}
             <View style={styles.container}>
                 <Image
                     source={phoneIcon}
@@ -34,6 +75,9 @@ function Index() {
                                 marginBottom: 16,
                                 paddingHorizontal: 10,
                             }}
+                            onChange={(e) => setEmail(e.nativeEvent.text)}
+                            value={email}
+                            autoCapitalize="none"
                             placeholder="Email"
                             keyboardType="email-address"
                         />
@@ -46,35 +90,38 @@ function Index() {
                                 marginBottom: 16,
                                 paddingHorizontal: 10,
                             }}
+                            onChange={(e) => setPassword(e.nativeEvent.text)}
+                            value={password}
+                            autoCapitalize="none"
                             placeholder="Password"
                             secureTextEntry={true}
                         />
                     </View>
 
                     <View>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: '#007BFF',
-                                    paddingVertical: 12,
-                                    borderRadius: 8,
-                                    alignItems: 'center',
-                                    marginBottom: 16,
-                                }}
-                                onPress={handleSigIn}
-                            >
-                                <Text style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}>Sign In</Text>
-                            </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: '#007BFF',
+                                paddingVertical: 12,
+                                borderRadius: 8,
+                                alignItems: 'center',
+                                marginBottom: 16,
+                            }}
+                            onPress={handleSigIn}
+                        >
+                            <Text style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}>Sign In</Text>
+                        </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={{
-                                    paddingVertical: 12,
-                                    borderRadius: 8,
-                                    alignItems: 'center',
-                                }}
-                                onPress={navigateToSignUp}
-                            >
-                                <Text style={{ color: '#007BFF', fontSize: 16, fontWeight: 'bold' }}>Sign Up</Text>
-                            </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                paddingVertical: 12,
+                                borderRadius: 8,
+                                alignItems: 'center',
+                            }}
+                            onPress={navigateToSignUp}
+                        >
+                            <Text style={{ color: '#007BFF', fontSize: 16, fontWeight: 'bold' }}>Sign Up</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -86,16 +133,16 @@ function Index() {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#fff',
-        padding: 16,
+        paddingHorizontal: 16
     },
     container: {
+        paddingHorizontal: 16,
         gap: 75,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        // backgroundColor: 'red'
     },
     form: {
         width: '100%',
