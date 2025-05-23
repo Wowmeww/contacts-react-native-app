@@ -2,53 +2,33 @@ import phoneIcon from '@/assets/images/mine/phoneIcon.png';
 import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Loading from '@/components/myComponents/loader';
-import { getLoggedInUser, getUsers, setLoggedInUser } from '@/localstorage';
+import { getLoggedInUser, setLoggedInUser } from '@/localstorage';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
+
 
 function Index() {
     let loading = false;
     const navigation = useNavigation();
-    const [users, setUsers] = useState(getUsers());
-    const [signed, setSigned] = useState(getLoggedInUser());
+    const [users, setUsers] = useState({});
+    const [signed, setSigned] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    getLoggedInUser().then((user) => {
-        if(user) {
-            navigation.navigate('(tabs)');
-        }
+    getLoggedInUser().then(user => {
+        if (user) navigation.navigate('(tabs)');
     });
 
+
     useEffect(() => {
-        // clearUsers();
-        setSigned(getLoggedInUser());
-        setUsers(getUsers());
-        if (signed) {
-            navigation.navigate('(tabs)');
-        }
+        //    console.log(getUsers())
     }, [])
-    getUsers().then(users => setUsers(users));
-    getLoggedInUser().then(user => setSigned(user));
+
     const handleSigIn = () => {
-        loading = true;
-
-        if (email && password) {
-            loading = true;
-            const user = users.find((user) => user.email === email && user.password === password);
-            if (user) {
-                setLoggedInUser(user);
-
-                console.log(signed);
-                loading = false;
+        setLoggedInUser({ email, password }).then((good) => {
+            if (good)
                 navigation.navigate('(tabs)');
-            } else {
-                alert("Invalid email or password");
-            }
-            loading = false;
-        } else {
-            alert("Please fill in all fields");
-        }
+        });
     }
     const navigateToSignUp = () => {
         navigation.navigate('signup');

@@ -4,9 +4,9 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 
 import { useNavigation } from '@react-navigation/native';
 
-import { useState } from 'react';
+import { getLoggedInUser, registerUser } from '@/localstorage';
+import { useEffect, useState } from 'react';
 
-import { storeUser } from '@/localstorage';
 
 function SignUp() {
     const [email, setEmail] = useState('');
@@ -15,34 +15,60 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigation = useNavigation();
 
-    const handleSignUp = () => {
-        
+    getLoggedInUser().then(user => {
+        if (user) navigation.navigate('(tabs)');
+    });
 
-        if (email && name && password && confirmPassword) {
-            if (password === confirmPassword && password.length >= 4) {
-                if (storeUser({
-                    email: email,
-                    name: name,
-                    password: password
-                })) {
-                    navigation.navigate('index');
-                }
-                return;
-            } else {
-                if (password.length < 4) {
-                    alert("Password must be at least 6 characters long");
-                }
-                else {
-                    alert("Passwords do not match");
-                }
-            }
-        } else {
-            alert("Please fill in all fields");
+
+    useEffect(() => {
+        // clearDatabase();
+
+    }, [])
+
+    const handleSignUp = () => {
+        let emptyFields = !email || !name || !password || !confirmPassword;
+        let passwordNotMatch = password !== confirmPassword;
+        let invalidEMail = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        if (emptyFields) {
+            alert('Please fill-up all the text fields.');
+        }
+        if (passwordNotMatch) {
+            alert('Password not match.');
+        }
+        if (invalidEMail) {
+            alert('Not a valid Email');
+        }
+        if (!emptyFields && !passwordNotMatch && !invalidEMail) {
+            const newUser = { name, password, email };
+            registerUser(newUser).then(() => {
+                setEmail('');
+                setName('');
+                setPassword('');
+                setConfirmPassword('');
+
+                navigateToSignIn();
+            });
         }
     }
     const navigateToSignIn = () => {
         navigation.navigate('index');
     }
+    // Password strength calculation function
+    const getPasswordStrength = (pwd) => {
+        if (!pwd) return '';
+        if (pwd.length < 6) return 'Weak';
+        if (pwd.match(/[A-Z]/) && pwd.match(/[0-9]/) && pwd.match(/[^A-Za-z0-9]/) && pwd.length >= 8) {
+            return 'Strong';
+        }
+        if ((pwd.match(/[A-Z]/) || pwd.match(/[0-9]/)) && pwd.length >= 6) {
+            return 'Medium';
+        }
+        return 'Weak';
+    };
+
+    const passwordStrength = getPasswordStrength(password);
+
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.screen}>
             <View style={styles.container}>
@@ -91,12 +117,27 @@ function SignUp() {
                                 borderColor: '#ccc',
                                 borderWidth: 1,
                                 borderRadius: 8,
-                                marginBottom: 16,
+                                marginBottom: 4,
                                 paddingHorizontal: 10,
                             }}
                             placeholder="Password"
                             secureTextEntry={true}
                         />
+                        {/* Password strength indicator */}
+                        {password.length > 0 && (
+                            <Text style={{
+                                marginBottom: 12,
+                                marginLeft: 4,
+                                color:
+                                    passwordStrength === 'Strong'
+                                        ? 'green'
+                                        : passwordStrength === 'Medium'
+                                            ? 'orange'
+                                            : 'red'
+                            }}>
+                                Password strength: {passwordStrength}
+                            </Text>
+                        )}
                         <TextInput
                             onChange={(e) => setConfirmPassword(e.nativeEvent.text)}
                             value={confirmPassword}

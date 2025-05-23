@@ -4,10 +4,9 @@ import { Platform } from 'react-native';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import Feather from '@expo/vector-icons/Feather';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 
-export default function TabLayout() {
+export default function CrudLayout() {
     const colorScheme = useColorScheme();
 
     return (
@@ -20,6 +19,7 @@ export default function TabLayout() {
                     },
                     default: {
                         backgroundColor: '#007BFF',
+                        display: 'none'
                     },
                 }),
                 tabBarActiveTintColor: '#FFFFFF',
@@ -35,19 +35,12 @@ export default function TabLayout() {
                     color: '#fff',
                 },
             }}>
+       
             <Tabs.Screen
-                name="index"
+                name="addContact"
                 options={{
-                    title: 'Contacts',
+                    title: 'Add contact',
                     tabBarIcon: ({ color }) => <Feather name="phone" size={24} color={color} />,
-                }}
-            />
-           
-            <Tabs.Screen
-                name="favorite"
-                options={{
-                    title: 'Favorites',
-                    tabBarIcon: ({ color }) => <MaterialIcons name="favorite-border" size={24} color={color} />,
                 }}
             />
         </Tabs>
