@@ -38,17 +38,22 @@ function SignUp() {
         if (!emptyFields && !passwordNotMatch && !invalidEMail) {
             const newUser = { name, password, email };
             registerUser(newUser).then(() => {
-                setEmail('');
-                setName('');
-                setPassword('');
-                setConfirmPassword('');
-
-                navigateToSignIn();
+                if (password.length > 5) {
+                    setEmail('');
+                    setName('');
+                    setPassword('');
+                    setConfirmPassword('');
+                    navigateToSignIn();
+                } else {
+                    setPassword('');
+                    setConfirmPassword('');
+                    alert('Password need to be at least 6 characters.');
+                }
             });
         }
     }
     const navigateToSignIn = () => {
-        router.push('/signin');
+        router.push('/');
     }
     // Password strength calculation function
     const getPasswordStrength = (pwd) => {
@@ -87,6 +92,7 @@ function SignUp() {
                                 borderWidth: 1,
                                 borderRadius: 8,
                                 marginBottom: 16,
+                                color: '#000',
                                 paddingHorizontal: 10,
                             }}
                             placeholder="Email"
@@ -98,6 +104,7 @@ function SignUp() {
                             value={name}
                             style={{
                                 height: 50,
+                                color: '#000',
                                 borderColor: '#ccc',
                                 borderWidth: 1,
                                 borderRadius: 8,
@@ -118,6 +125,7 @@ function SignUp() {
                                 borderRadius: 8,
                                 marginBottom: 4,
                                 paddingHorizontal: 10,
+                                color: '#000'
                             }}
                             placeholder="Password"
                             secureTextEntry={true}
@@ -149,6 +157,7 @@ function SignUp() {
                                 borderRadius: 8,
                                 marginBottom: 16,
                                 paddingHorizontal: 10,
+                                color: '#000'
                             }}
                             placeholder="Confirm password"
                             secureTextEntry={true}

@@ -2,13 +2,11 @@ import { setLoggedInUser } from "@/localstorage";
 import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { useNavigation } from '@react-navigation/native';
 export default function Logout() {
     const router = useRouter();
-    const navigation = useNavigation();
     const handleLogout = () => {
         setLoggedInUser(null).then(() => {
-            router.push('/signin')
+            router.push('/signup');
         });
     }
     return (
@@ -66,6 +64,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 6,
         paddingVertical: 3,
-        paddingHorizontal: 6
+        paddingHorizontal: 8
     }
 });

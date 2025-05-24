@@ -57,6 +57,7 @@ export default function Edit() {
                         borderRadius: 8,
                         marginBottom: 16,
                         paddingHorizontal: 10,
+                         color: '#000'
                     }}
                     placeholder="Name"
                 />
@@ -72,6 +73,7 @@ export default function Edit() {
                         borderRadius: 8,
                         marginBottom: 16,
                         paddingHorizontal: 10,
+                         color: '#000'
                     }}
                     placeholder="Number"
                     keyboardType="numeric"

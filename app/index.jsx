@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
 
-function SignIn() {
+function Index() {
     let loading = false;
     const navigation = useNavigation();
     const router = useRouter();
@@ -51,6 +51,7 @@ function SignIn() {
                                 borderRadius: 8,
                                 marginBottom: 16,
                                 paddingHorizontal: 10,
+                                color: '#000'
                             }}
                             onChange={(e) => setEmail(e.nativeEvent.text)}
                             value={email}
@@ -67,6 +68,7 @@ function SignIn() {
                                 borderRadius: 8,
                                 marginBottom: 16,
                                 paddingHorizontal: 10,
+                                color: '#000'
                             }}
                             onChange={(e) => setPassword(e.nativeEvent.text)}
                             value={password}
@@ -137,4 +139,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignIn;
+export default Index;
