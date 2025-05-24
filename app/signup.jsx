@@ -5,7 +5,8 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import { useNavigation } from '@react-navigation/native';
 
 import { getLoggedInUser, registerUser } from '@/localstorage';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
 
 
 function SignUp() {
@@ -14,16 +15,11 @@ function SignUp() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigation = useNavigation();
+    const router = useRouter();
 
     getLoggedInUser().then(user => {
         if (user) navigation.navigate('(tabs)');
     });
-
-
-    useEffect(() => {
-        // clearDatabase();
-
-    }, [])
 
     const handleSignUp = () => {
         let emptyFields = !email || !name || !password || !confirmPassword;
@@ -52,7 +48,7 @@ function SignUp() {
         }
     }
     const navigateToSignIn = () => {
-        navigation.navigate('index');
+        router.push('/signin');
     }
     // Password strength calculation function
     const getPasswordStrength = (pwd) => {

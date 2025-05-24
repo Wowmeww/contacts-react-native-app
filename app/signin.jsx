@@ -2,16 +2,16 @@ import phoneIcon from '@/assets/images/mine/phoneIcon.png';
 import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Loading from '@/components/myComponents/loader';
-import { getLoggedInUser, setLoggedInUser } from '@/localstorage';
+import { getLoggedInUser, loginUser } from '@/localstorage';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
 
 
-function Index() {
+function SignIn() {
     let loading = false;
     const navigation = useNavigation();
-    const [users, setUsers] = useState({});
-    const [signed, setSigned] = useState({});
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -19,19 +19,16 @@ function Index() {
         if (user) navigation.navigate('(tabs)');
     });
 
-
-    useEffect(() => {
-        //    console.log(getUsers())
-    }, [])
-
+// clearDatabase();
     const handleSigIn = () => {
-        setLoggedInUser({ email, password }).then((good) => {
-            if (good)
-                navigation.navigate('(tabs)');
+        loginUser(email, password).then((res) => {
+            if(res.success) {
+                 router.push('/(tabs)');
+            }
         });
     }
     const navigateToSignUp = () => {
-        navigation.navigate('signup');
+        router.push('/signup');
     }
 
     return (
@@ -138,4 +135,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Index;
+export default SignIn;

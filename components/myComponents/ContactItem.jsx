@@ -1,4 +1,4 @@
-import demoPic from '@/assets/images/mine/avatars/avatar_4.jpg';
+import { avatarsSource } from "@/localstorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
@@ -14,7 +14,7 @@ export default function ContactItem({ contact, index, onToggleFavorite, onSelect
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16, gap: 10 }}
         >
 
-            <Image source={demoPic} style={{ width: 54, height: 54, borderRadius: 27, alignItems: 'center', justifyContent: 'center', borderColor: '#007BFF', borderWidth: 2 }} />
+            <Image source={contact.avatar? contact.avatar.source : avatarsSource[4].source} style={{ width: 54, height: 54, borderRadius: 27, alignItems: 'center', justifyContent: 'center', borderColor: '#007BFF', borderWidth: 2 }} />
 
             <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
                 <View>

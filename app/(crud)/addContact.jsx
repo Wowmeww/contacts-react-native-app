@@ -1,3 +1,4 @@
+import AvatarSelector from "@/components/myComponents/avatarSelector";
 import { addContact } from "@/localstorage";
 import { useRouter } from 'expo-router';
 import { useState } from "react";
@@ -10,6 +11,12 @@ export default function AddContact() {
     const router = useRouter();
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
+    const [avatar, setAvatar] = useState('');
+
+
+    const handleAvatarSelect = (img) => {
+        setAvatar(img);
+    }
 
     const handleAddContact = () => {
         if (name === '' || number === '') {
@@ -17,7 +24,7 @@ export default function AddContact() {
         }
         else {
 
-            addContact({ name, number }).then(() =>
+            addContact({ name, number, avatar }).then(() =>
                 router.push('(tabs)')
             );
         }
@@ -27,6 +34,9 @@ export default function AddContact() {
     return (
         <View style={styles.form}>
             <Text style={styles.formTitle}>Add contact</Text>
+
+            {/* Avatar */}
+            <AvatarSelector onSelect={handleAvatarSelect} />
 
             <View style={styles.textInputContainer}>
 

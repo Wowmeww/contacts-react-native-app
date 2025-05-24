@@ -17,6 +17,16 @@ AsyncStorage keys
 
 */
 
+const avatarsSource = [
+    { name: '1', source: require('@/assets/images/mine/avatars/avatar_1.jpg') },
+    { name: '2', source: require('@/assets/images/mine/avatars/avatar_2.jpg') },
+    { name: '3', source: require('@/assets/images/mine/avatars/avatar_3.jpg') },
+    { name: '4', source: require('@/assets/images/mine/avatars/avatar_4.jpg') },
+    { name: '5', source: require('@/assets/images/mine/avatars/avatar_5.jpg') },
+    { name: '6', source: require('@/assets/images/mine/avatars/avatar_6.jpg') },
+    { name: '7', source: require('@/assets/images/mine/avatars/avatar_7.jpg') },
+];
+
 async function registerUser(newUser) {
     try {
         const user = { ...newUser, contacts: newUser.contacts || [] };
@@ -204,16 +214,39 @@ async function toggleFavoriteContact(index) {
     }
 }
 
+async function loginUser(email, password) {
+    try {
+        if (!email || !password) {
+            alert('Please enter both email and password');
+            return { success: false, message: 'Missing credentials' };
+        }
+
+        const users = await getUsers();
+        console.log('All users:', users); // Debugging
+
+        const matchedUser = users.find(u => u.email === email && u.password === password);
+
+        if (matchedUser) {
+            await setLoggedInUser(matchedUser);
+            return { success: true, user: matchedUser };
+        } else {
+            alert('Invalid email or password');
+            return { success: false, message: 'Invalid email or password' };
+        }
+    } catch (e) {
+        console.log('Login error:', e);
+        return { success: false, message: 'Something went wrong during login' };
+    }
+}
+
 
 
 
 export {
-    addContact,
-    clearDatabase,
+    addContact, avatarsSource, clearDatabase,
     deleteContact,
     getLoggedInUser,
-    getUsers,
-    registerUser,
+    getUsers, loginUser, registerUser,
     seedDatabase,
     setLoggedInUser,
     toggleFavoriteContact,

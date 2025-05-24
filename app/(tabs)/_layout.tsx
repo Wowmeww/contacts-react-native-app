@@ -1,15 +1,12 @@
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-import Feather from '@expo/vector-icons/Feather';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-
-
 export default function TabLayout() {
-    const colorScheme = useColorScheme();
-
+    
     return (
         <Tabs
             screenOptions={{
@@ -33,7 +30,7 @@ export default function TabLayout() {
                 },
                 headerTitleStyle: {
                     color: '#fff',
-                },
+                }
             }}>
             <Tabs.Screen
                 name="index"
@@ -42,12 +39,19 @@ export default function TabLayout() {
                     tabBarIcon: ({ color }) => <Feather name="phone" size={24} color={color} />,
                 }}
             />
-           
+
             <Tabs.Screen
                 name="favorite"
                 options={{
                     title: 'Favorites',
                     tabBarIcon: ({ color }) => <MaterialIcons name="favorite-border" size={24} color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name="logout"
+                options={{
+                    title: 'Logout',
+                    tabBarIcon: ({ color }) => <AntDesign name="logout" size={24} color={color} />,
                 }}
             />
         </Tabs>

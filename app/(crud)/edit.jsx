@@ -1,3 +1,4 @@
+import AvatarSelector from '@/components/myComponents/avatarSelector';
 import { updateContact } from '@/localstorage';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from "react";
@@ -10,11 +11,18 @@ export default function Edit() {
     const router = useRouter();
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
+    const [avatar, setAvatar] = useState('');
+
+     const handleAvatarSelect = (img) => {
+        setAvatar(img);
+    }
+
 
     useEffect(() => {
         const contact = JSON.parse(selectedContact);
         setName(contact.name);
         setNumber(contact.number);
+        setAvatar(contact.avatar? contact.avatar: null);
     }, [])
 
     const handleUpdateContact = () => {
@@ -23,7 +31,7 @@ export default function Edit() {
         }
         else {
             const contact = JSON.parse(selectedContact);
-            updateContact(contact.index, { name, number }).then(() => {
+            updateContact(contact.index, { name, number, avatar }).then(() => {
                 router.push('/(tabs)');
             });
         }
@@ -33,6 +41,8 @@ export default function Edit() {
     return (
         <View style={styles.form}>
             <Text style={styles.formTitle}>Edit contact</Text>
+
+            <AvatarSelector onSelect={handleAvatarSelect} defaultAvatar={avatar} />
 
             <View style={styles.textInputContainer}>
 

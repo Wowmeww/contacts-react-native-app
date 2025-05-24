@@ -8,7 +8,6 @@ import { useCallback, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 
-
 export default function HomeScreen() {
     const router = useRouter();
     const navigation = useNavigation();
@@ -43,14 +42,14 @@ export default function HomeScreen() {
     useFocusEffect(
         useCallback(() => {
             getLoggedInUser().then(u => {
-                if (!u) {
-                    navigation.navigate('index');
-                } else {
+                if (u) {
                     setUser(u);
                     setContacts(u.contacts || []);
+                } else {
+                    router.push('/');
                 }
             });
-        }, [navigation, optionsShowing])
+        }, [navigation, optionsShowing, router])
     );
     async function handleToggleFavorite(index) {
         if (!user) return;
@@ -81,12 +80,7 @@ export default function HomeScreen() {
             </ScrollView>
 
             <TouchableOpacity
-                onPress={() => router.push({
-                    pathname: '/addContact', params: {
-                        from: 'edit',
-                        contactId: '12345',
-                    },
-                })}
+                onPress={() => router.push('/addContact')}
                 style={{
                     position: 'absolute',
                     right: 20,
@@ -96,6 +90,7 @@ export default function HomeScreen() {
             >
                 <Ionicons name="add-circle-outline" size={60} color="#007BFF" />
             </TouchableOpacity>
+
         </View>
     );
 }
