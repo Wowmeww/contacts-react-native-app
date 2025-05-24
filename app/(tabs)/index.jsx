@@ -69,7 +69,6 @@ export default function HomeScreen() {
                     (contacts || []).map((contact, index) => (
                         <ContactItem
                             onSelected={() => handelSelectContact(contact, index)}
-
                             key={index}
                             contact={contact}
                             index={index}

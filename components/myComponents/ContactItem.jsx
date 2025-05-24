@@ -10,7 +10,7 @@ export default function ContactItem({ contact, index, onToggleFavorite, onSelect
     return (
         <TouchableOpacity
             activeOpacity={1}
-            onLongPress={() => onSelected && onSelected(index)}
+            onLongPress={() => onSelected(index)}
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16, gap: 10 }}
         >
 
@@ -21,7 +21,7 @@ export default function ContactItem({ contact, index, onToggleFavorite, onSelect
                     <Text style={{ fontWeight: "800", marginBottom: -5 }}>{contact.name}</Text>
                     <Text style={{ fontSize: 12 }}>{contact.number}</Text>
                 </View>
-                <TouchableOpacity onPress={handleToggleFavorite}>
+                <TouchableOpacity onPress={handleToggleFavorite} style={{zIndex: 90}}>
                     {
                         contact.favorite ?
                             <MaterialIcons name="favorite" size={36} color="#007BFF" /> :

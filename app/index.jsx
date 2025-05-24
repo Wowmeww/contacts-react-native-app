@@ -14,12 +14,13 @@ function Index() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    // clearDatabase();
     getLoggedInUser().then(user => {
+
         if (user) navigation.navigate('(tabs)');
     });
 
-    // clearDatabase();
+ 
     const handleSigIn = () => {
         loginUser(email, password).then((res) => {
             if (res.success) {

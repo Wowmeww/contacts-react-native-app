@@ -5,9 +5,8 @@ import { avatarsSource } from '@/localstorage';
 
 export default function AvatarSelector({ onSelect, defaultAvatar }) {
     const [showOptions, setShowOptions] = useState(false);
-    const [selectedAvatar, setSelectedAvatar] = useState(defaultAvatar? defaultAvatar:avatarsSource[4]);
-
-
+    const [selectedAvatar, setSelectedAvatar] = useState(()=> defaultAvatar? defaultAvatar: avatarsSource[4]);
+ 
     const toggleOptions = () => setShowOptions(!showOptions);
     const handelSelect = (img) => {
         setSelectedAvatar(img);
@@ -25,7 +24,7 @@ export default function AvatarSelector({ onSelect, defaultAvatar }) {
                 <View style={styles.container}>
                     {
                         avatarsSource.map((img) => (
-                            <TouchableOpacity key={img.name} onPress={()=> handelSelect(img)} >
+                            <TouchableOpacity key={img.name} onPress={() => handelSelect(img)} >
                                 <Image source={img.source} style={styles.availableAvatar} />
                             </TouchableOpacity>
                         ))

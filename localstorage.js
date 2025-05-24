@@ -36,8 +36,8 @@ async function registerUser(newUser) {
             throw new Error('User already exists');
         }
         users.push(user);
-        console.dir(users);
         await AsyncStorage.setItem('users', JSON.stringify(users));
+        alert('Account created proceed to login');
         return true;
     } catch (e) {
         alert(e);

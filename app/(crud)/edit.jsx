@@ -7,11 +7,11 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-nativ
 
 export default function Edit() {
     const { selectedContact } = useLocalSearchParams();
-
+    const contact = JSON.parse(selectedContact);
     const router = useRouter();
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
-    const [avatar, setAvatar] = useState('');
+    const [avatar, setAvatar] = useState(contact.avatar);
 
     const handleAvatarSelect = (img) => {
         setAvatar(img);
@@ -19,10 +19,9 @@ export default function Edit() {
 
 
     useEffect(() => {
-        const contact = JSON.parse(selectedContact);
         setName(contact.name);
         setNumber(contact.number);
-        setAvatar(contact.avatar ? contact.avatar : null);
+        setAvatar(contact.avatar);
     }, [])
 
     const handleUpdateContact = () => {
@@ -57,7 +56,7 @@ export default function Edit() {
                         borderRadius: 8,
                         marginBottom: 16,
                         paddingHorizontal: 10,
-                         color: '#000'
+                        color: '#000'
                     }}
                     placeholder="Name"
                 />
@@ -73,7 +72,7 @@ export default function Edit() {
                         borderRadius: 8,
                         marginBottom: 16,
                         paddingHorizontal: 10,
-                         color: '#000'
+                        color: '#000'
                     }}
                     placeholder="Number"
                     keyboardType="numeric"
