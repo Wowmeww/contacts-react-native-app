@@ -6,7 +6,7 @@ export default function Logout() {
     const router = useRouter();
     const handleLogout = () => {
         setLoggedInUser(null).then(() => {
-            router.push('/signup');
+            router.push('/signin');
         });
     }
     return (

@@ -12,7 +12,7 @@ export default function Favorite() {
     useFocusEffect(
         useCallback(() => {
             getLoggedInUser().then(u => {
-                if (!u) navigation.navigate('index');
+                if (!u) navigation.navigate('/signin');
                 else {
                     setUser(u);
                     setContacts(u.contacts || []);

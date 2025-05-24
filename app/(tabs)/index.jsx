@@ -46,7 +46,7 @@ export default function HomeScreen() {
                     setUser(u);
                     setContacts(u.contacts || []);
                 } else {
-                    router.push('/');
+                    router.push('/signin');
                 }
             });
         }, [navigation, optionsShowing, router])
