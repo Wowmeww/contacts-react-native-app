@@ -19,11 +19,11 @@ function SignIn() {
         if (user) navigation.navigate('(tabs)');
     });
 
-// clearDatabase();
+    // clearDatabase();
     const handleSigIn = () => {
         loginUser(email, password).then((res) => {
-            if(res.success) {
-                 router.push('/(tabs)');
+            if (res.success) {
+                router.push('/(tabs)');
             }
         });
     }
@@ -57,6 +57,7 @@ function SignIn() {
                             autoCapitalize="none"
                             placeholder="Email"
                             keyboardType="email-address"
+                            placeholderTextColor="gray"
                         />
                         <TextInput
                             style={{
@@ -72,6 +73,7 @@ function SignIn() {
                             autoCapitalize="none"
                             placeholder="Password"
                             secureTextEntry={true}
+                            placeholderTextColor="gray"
                         />
                     </View>
 

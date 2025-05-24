@@ -13,7 +13,7 @@ export default function Edit() {
     const [number, setNumber] = useState('');
     const [avatar, setAvatar] = useState('');
 
-     const handleAvatarSelect = (img) => {
+    const handleAvatarSelect = (img) => {
         setAvatar(img);
     }
 
@@ -22,7 +22,7 @@ export default function Edit() {
         const contact = JSON.parse(selectedContact);
         setName(contact.name);
         setNumber(contact.number);
-        setAvatar(contact.avatar? contact.avatar: null);
+        setAvatar(contact.avatar ? contact.avatar : null);
     }, [])
 
     const handleUpdateContact = () => {
@@ -47,6 +47,7 @@ export default function Edit() {
             <View style={styles.textInputContainer}>
 
                 <TextInput
+                    placeholderTextColor="gray"
                     onChange={(e) => setName(e.nativeEvent.text)}
                     value={name}
                     style={{
@@ -60,6 +61,7 @@ export default function Edit() {
                     placeholder="Name"
                 />
                 <TextInput
+                    placeholderTextColor="gray"
                     onChange={(e) => setNumber(e.nativeEvent.text)}
                     value={number}
                     autoCapitalize="none"

@@ -77,6 +77,7 @@ function SignUp() {
 
                     <View style={styles.textInputContainer}>
                         <TextInput
+                            placeholderTextColor="gray"
                             onChange={(e) => setEmail(e.nativeEvent.text)}
                             value={email}
                             autoCapitalize="none"
@@ -92,6 +93,7 @@ function SignUp() {
                             keyboardType="email-address"
                         />
                         <TextInput
+                            placeholderTextColor="gray"
                             onChange={(e) => setName(e.nativeEvent.text)}
                             value={name}
                             style={{
@@ -105,6 +107,7 @@ function SignUp() {
                             placeholder="Name"
                         />
                         <TextInput
+                            placeholderTextColor="gray"
                             onChange={(e) => setPassword(e.nativeEvent.text)}
                             value={password}
                             autoCapitalize="none"
@@ -135,6 +138,7 @@ function SignUp() {
                             </Text>
                         )}
                         <TextInput
+                            placeholderTextColor="gray"
                             onChange={(e) => setConfirmPassword(e.nativeEvent.text)}
                             value={confirmPassword}
                             autoCapitalize="none"

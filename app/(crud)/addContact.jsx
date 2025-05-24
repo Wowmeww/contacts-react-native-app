@@ -41,6 +41,7 @@ export default function AddContact() {
             <View style={styles.textInputContainer}>
 
                 <TextInput
+                    placeholderTextColor="gray"
                     onChange={(e) => setName(e.nativeEvent.text)}
                     value={name}
                     style={{
@@ -54,6 +55,7 @@ export default function AddContact() {
                     placeholder="Name"
                 />
                 <TextInput
+                    placeholderTextColor="gray"
                     onChange={(e) => setNumber(e.nativeEvent.text)}
                     value={number}
                     autoCapitalize="none"

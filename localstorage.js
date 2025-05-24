@@ -35,6 +35,9 @@ async function registerUser(newUser) {
         if (userExists) {
             throw new Error('User already exists');
         }
+        if (newUser.password > 6) {
+            throw new Error('Password need to be at least 6 character long.');
+        }
         users.push(user);
         console.dir(users);
         await AsyncStorage.setItem('users', JSON.stringify(users));
